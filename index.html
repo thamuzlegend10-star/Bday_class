@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BLOCKDAY — Birthday Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Hidden Minecraft audio element (Clean relative path) -->
+    <audio id="mc-click-sound" src="audio/mc.mp3" preload="auto"></audio>
+
+    <div class="launcher-container">
+      <!-- Left Sidebar Navigation -->
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          <span class="sidebar-brand-icon" aria-hidden="true">🎂</span>
+          <div class="sidebar-brand-text">
+            <span class="brand-name">BLOCKDAY</span>
+            <span class="brand-sub">Birthday Tracker</span>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <a href="#" data-page="birthdays" class="nav-item active">
+            <span class="nav-icon" aria-hidden="true">🎂</span>
+            <span>Birthdays</span>
+          </a>
+          <a href="#" data-page="calendar" class="nav-item">
+            <span class="nav-icon" aria-hidden="true">📅</span>
+            <span>Calendar</span>
+          </a>
+          <a href="#" data-page="feedback" class="nav-item">
+            <span class="nav-icon" aria-hidden="true">💬</span>
+            <span>Feedback</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="app-shell">
+        <div id="page-birthdays" class="page-content active">
+          <!-- Hero: what this is + today's date -->
+          <section class="panel hero-card">
+            <div class="hero-content">
+              <div class="hero-info">
+                <h1>Never miss a celebration</h1>
+                <p class="hero-copy">Track every classmate's birthday, see who's celebrating next, and browse the full year from one dashboard.</p>
+              </div>
+              <div class="hero-date">
+                <span class="hero-date-label">Today</span>
+                <span class="hero-date-value" id="today-label">Loading date…</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Birthday statistics -->
+          <section class="stats-row" aria-label="Birthday statistics">
+            <div class="panel stat-card">
+              <span class="stat-label">Tracked</span>
+              <span class="stat-value" id="stat-total">–</span>
+              <span class="stat-hint">birthdays on the list</span>
+            </div>
+            <div class="panel stat-card">
+              <span class="stat-label">This Month</span>
+              <span class="stat-value" id="stat-month">–</span>
+              <span class="stat-hint" id="stat-month-hint">birthdays</span>
+            </div>
+            <div class="panel stat-card stat-card--accent">
+              <span class="stat-label">Next Up</span>
+              <span class="stat-value" id="stat-next-days">–</span>
+              <span class="stat-hint" id="stat-next-name">—</span>
+            </div>
+          </section>
+
+          <!-- Primary focus: birthday list, plus monthly stats -->
+          <div class="content-grid">
+            <section class="panel list-card">
+              <div class="section-heading">
+                <h2>Coming up this week</h2>
+                <span class="muted">Within 7 days</span>
+              </div>
+              <div id="birthday-list" class="birthday-list"></div>
+            </section>
+
+            <section class="panel graph-card">
+              <div class="section-heading">
+                <h2>Birthdays by month</h2>
+                <span class="muted">Full year</span>
+              </div>
+              <div id="bar-graph" class="bar-graph"></div>
+            </section>
+          </div>
+        </div>
+
+        <div id="page-calendar" class="page-content">
+          <!-- Calendar Section -->
+          <section class="panel calendar-card">
+            <div class="section-heading">
+              <h2 id="calendar-month">Loading...</h2>
+              <span class="muted" id="calendar-year"></span>
+            </div>
+            <div class="calendar-grid">
+              <div class="calendar-header">
+                <div class="day-name">Sun</div>
+                <div class="day-name">Mon</div>
+                <div class="day-name">Tue</div>
+                <div class="day-name">Wed</div>
+                <div class="day-name">Thu</div>
+                <div class="day-name">Fri</div>
+                <div class="day-name">Sat</div>
+              </div>
+              <div id="calendar-days" class="calendar-days"></div>
+            </div>
+            <div class="calendar-legend">
+              <span class="legend-item"><span class="legend-dot legend-dot--today"></span>Today</span>
+              <span class="legend-item"><span class="legend-dot legend-dot--birthday"></span>Birthday</span>
+            </div>
+          </section>
+        </div>
+
+        <div id="page-feedback" class="page-content">
+          <!-- Feedback Section -->
+          <section class="panel feedback-card">
+            <div class="section-heading">
+              <h2>Feedback</h2>
+              <span class="status-badge">In progress</span>
+            </div>
+            <div class="feedback-content">
+              <p class="feedback-description">I'd love to hear your thoughts on this website — please share your feedback, and I'll receive it via email.</p>
+              <form class="advice-form" id="advice-form" action="mailto:justinkwok800@gmail.com" method="post" enctype="text/plain">
+                <div class="form-group">
+                  <label for="name">Your name</label>
+                  <input type="text" id="name" name="name" class="mc-input" required>
+                </div>
+                <div class="form-group">
+                  <label for="message">Your advice</label>
+                  <textarea id="message" name="message" class="mc-input" rows="5" required></textarea>
+                </div>
+                <div class="form-footer">
+                  <button type="submit" class="mc-btn submit-btn mc-btn--primary">Send feedback</button>
+                  <span class="form-hint" id="form-hint"></span>
+                </div>
+              </form>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="birthdays.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
